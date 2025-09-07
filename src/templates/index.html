@@ -1,0 +1,84 @@
+{# index.html #}
+{% set page_title = page_title or "MeowCount - Discord Server Counter" %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>{{ page_title }}</title>
+    <link rel="icon" type="image/svg+xml" href="{{ url_for('static', filename='icon.svg') }}" />
+
+    <!-- SEO Meta -->
+    <meta name="description" content="Easily get the number of Discord servers you are in." />
+    <meta name="keywords" content="discord, server count, guilds, discord guild, discord server, counter" />
+    <meta name="robots" content="index, follow" />
+
+    <!-- Open Graph -->
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="{{ page_title }}" />
+    <meta property="og:description" content="Easily get the number of Discord servers you are in." />
+    <meta property="og:url" content="{{ url_for('index', _external=True) }}" />
+    <meta property="og:image" content="{{ url_for('static', filename='icon.svg', _external=True) }}" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="{{ page_title }}" />
+    <meta name="twitter:description" content="Easily get the number of Discord servers you are in." />
+    <meta name="twitter:image" content="{{ url_for('static', filename='icon.svg', _external=True) }}" />
+    <meta name="twitter:image:alt" content="{{ page_title }}" />
+
+    <!-- Tailwind CSS via CDN -->
+    <script
+      src="https://cdn.tailwindcss.com"
+    ></script>
+
+    {% if authenticated %}
+    <!-- Alpine.js -->
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"
+    ></script>
+    {% endif %}
+
+    <!-- Tailwind Animation Config -->
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            animation: {
+              "pulse-slow": "pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite",
+              "bounce-gentle": "bounce 2s infinite",
+              "fade-in": "fadeIn 0.8s ease-in-out",
+              "slide-up": "slideUp 0.6s ease-out",
+            },
+            keyframes: {
+              fadeIn: {
+                "0%": { opacity: "0", transform: "translateY(20px)" },
+                "100%": { opacity: "1", transform: "translateY(0)" },
+              },
+              slideUp: {
+                "0%": { opacity: "0", transform: "translateY(30px)" },
+                "100%": { opacity: "1", transform: "translateY(0)" },
+              },
+            },
+          },
+        },
+      };
+    </script>
+  </head>
+
+  <body class="min-h-screen bg-gradient-to-br from-[#4facfe] to-[#00f2fe] flex flex-col justify-center items-center p-4 sm:p-6 md:p-8">
+    <main role="main" class="w-full max-w-sm animate-fade-in">
+      {% if authenticated %}
+        <!-- Authenticated View -->
+        {% include "components/authenticated_card.html" %}
+      {% else %}
+        <!-- Guest View -->
+        {% include "components/login_card.html" %}
+      {% endif %}
+    </main>
+  </body>
+</html>

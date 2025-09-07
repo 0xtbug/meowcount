@@ -1,0 +1,38 @@
+services:
+  meowcount:
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      - APP_MODE=prod
+      - CLIENT_ID=${CLIENT_ID}
+      - CLIENT_SECRET=${CLIENT_SECRET}
+      - REDIRECT_URI=${REDIRECT_URI}
+      - SECRET_KEY=${SECRET_KEY}
+    env_file:
+      - .env
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  meowcount-dev:
+    build: .
+    ports:
+      - "3001:3000"
+    environment:
+      - APP_MODE=dev
+      - HOST=0.0.0.0
+      - CLIENT_ID=${CLIENT_ID}
+      - CLIENT_SECRET=${CLIENT_SECRET}
+      - REDIRECT_URI=${REDIRECT_URI}
+      - SECRET_KEY=${SECRET_KEY}
+    env_file:
+      - .env
+    volumes:
+      - .:/app
+    command: ["python", "run.py"]
+    restart: unless-stopped
