@@ -1,6 +1,8 @@
 # MeowCount
 MeowCount is a minimal Flask web app that shows how many Discord servers (guilds) you’re in. It uses Discord OAuth2 to request the `identify` and `guilds` scopes, counts your servers from the Discord API, and displays the result. No database is required.
 
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2F0xtbug%2Fmeowcount)
+
 ## Installation
 ### Local
 1. Prerequisites: Python 3.11+.

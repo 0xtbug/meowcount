@@ -119,6 +119,10 @@ def refresh():
         logging.error(f"Refresh error: {e}")
         return jsonify({'error': str(e)}), 500
 
+@app.route('/api/health', methods=['GET'])
+def health():
+    return "OK", 200
+
 @app.route('/robots.txt')
 def robots():
     return send_file("robots.txt")
